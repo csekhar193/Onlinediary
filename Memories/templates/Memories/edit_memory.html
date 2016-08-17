@@ -1,0 +1,20 @@
+{% extends 'Memories/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+	<h1>New Memory</h1>
+	<form method="POST" class="post-form">{% csrf_token %}
+		{{ form.as_p }}
+		 <button type="submit" class="save btn btn-default">Save</button>
+	</form>
+	</div>
+	<script src='http://cdn.tinymce.com/4/tinymce.min.js'></script>
+	<script>
+	  tinymce.init({
+	    selector: '#notes'
+	  });
+	</script>
+</div>
+       
+{% endblock %}

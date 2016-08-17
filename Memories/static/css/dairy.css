@@ -1,0 +1,93 @@
+body{
+    background: white url("images/memory2.jpg");
+}
+.navbar{
+    border-radius: 0;
+}
+.navbar-brand{
+    font-family: 'Satisfy', cursive;
+    font-size: 20px;
+
+}
+
+
+h1, h2, h3, h4 {
+    font-family: 'Lobster', cursive;
+    text-transform: capitalize;
+}
+
+.date {
+    color: #828282;
+    padding:0px 0px 0px 0px;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+
+.post {
+   
+    margin-bottom: 20px;
+    padding:0px 0px 0px 0px;
+}
+
+.post h1 a, .post h1 a:visited {
+    color: #000000;
+    padding:0px 0px 0px 0px;
+    font-size: 25px
+
+}
+.a{
+    text-align: right;
+    padding: 10px 0px 0px 20px;
+}
+.b{
+    text-align: justify;
+}
+.panel1{
+    margin-top: 135px;
+    margin-right: 10px;
+    text-align: center;
+}
+.header{
+    padding-bottom: 5px;
+}
+.alert{
+    text-align: center;
+}
+
+.c{
+   
+    text-align: right;
+    padding :10px 20px 10px 20px;
+}
+.well{
+    padding:10px 40px 10px 40px ;
+}
+
+#right{
+    text-align: right;
+}
+.jumbotron h1{
+    padding: 10px 20px 10px 20px;
+    font-size: 30px
+}
+.jumbotron p{
+    padding: 0px 20px 0px 20px;
+    text-align: justify;
+    font-size: 14px
+}
+.jumbotron {
+    padding: 40px 0px 40px 0px;
+}

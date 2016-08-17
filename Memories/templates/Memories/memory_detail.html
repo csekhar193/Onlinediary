@@ -1,0 +1,29 @@
+{% extends 'Memories/base.html' %}
+
+{% block content %}
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="jumbotron">
+    <div class="post">
+        
+        {% if user.is_authenticated %}
+        	<div class ="btn-group pull-right ">
+	       		<a class="btn btn-default" href="{% url 'edit_memory' pk=memory.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+	       		<a class="btn btn-default" href="{% url 'memory_remove' pk=memory.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+       		</div>
+        {% endif %}
+        {% if memory.published_date %}
+            <p id="right">published: {{ memory.published_date }}</p>
+        {% else %}
+        	<div class="btn-group pull-right">
+        		<a class="btn btn-default btn-sm" href="{% url 'Memories.views.memory_publish' pk=memory.pk %}"><span class="d">Publish</span></a>
+        	</div>
+        {% endif %}
+        <h1>{{ memory.title }}</h1>
+        <p> written by {{ memory.author }} </p>
+        <p>{{ memory.text|linebreaksbr }}</p>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
