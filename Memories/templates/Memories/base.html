@@ -22,12 +22,12 @@
             </div>
             <div class='collapse navbar-collapse' id='topnav'>
                 <ul class='nav navbar-nav navbar-right'>
-                    <li class="">
+                    <li class="{% block drafts %}{% endblock %}">
                         <a href="{% url 'memories_draft_list' %}">
                             <span class='glyphicon glyphicon-edit' aria-hidden='true'></span>&nbsp; Drafts
                         </a>
                     </li>
-                    <li class="">
+                    <li class="{% block addnewmemory %}{% endblock %}">
                         <a href="{% url 'new_memory' %}">
                             <span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add New Memory
                         </a>
@@ -39,7 +39,7 @@
                             </a>
                         </li>
                     {% else %}
-                        <li class="">
+                        <li class="{% block login %}{% endblock %}">
                             <a href="/accounts/login/">
                                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Login
                             </a>

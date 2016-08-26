@@ -25,7 +25,7 @@ class MyRegistrationForm(UserCreationForm):
 			user.save()
 		return user
 
-class MemoryForm(forms.Form):
+class MemoryForm(forms.ModelForm):
 	
 	title = forms.CharField(required=True)
 	text = forms.CharField(widget=forms.Textarea(attrs={
@@ -33,6 +33,8 @@ class MemoryForm(forms.Form):
 	class Meta:
 		model = Todays_memory
 		fields = ('title','text')
+
+
 
 
 

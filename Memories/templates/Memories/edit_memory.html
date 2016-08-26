@@ -1,19 +1,29 @@
 {% extends 'Memories/base.html' %}
+{% block addnewmemory %} Active {% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-xs-12 col-md-12">
 	<h1>New Memory</h1>
 	<form method="POST" class="post-form">{% csrf_token %}
-		{{ form.as_p }}
-		 <button type="submit" class="save btn btn-default">Save</button>
+		{{ form.as_p|safe }}
+		<button type="submit" name="Save" class="save btn btn-default">Save</button>
 	</form>
 	</div>
-	<script src='http://cdn.tinymce.com/4/tinymce.min.js'></script>
+	<script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
 	<script>
 	  tinymce.init({
-	    selector: '#notes'
+	    selector: '#notes',
+	    theme: 'modern',
+	    
+	    plugins: [
+	      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+	      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+	      'save table contextmenu directionality emoticons template paste textcolor'
+	    ],
+	    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons'
 	  });
+
 	</script>
 </div>
        

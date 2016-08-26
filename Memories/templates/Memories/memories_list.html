@@ -1,4 +1,5 @@
 {% extends 'Memories/base.html' %}
+{% block memories %} Active {% endblock %}
 {% block content %}
  
    
@@ -9,7 +10,7 @@
             <div class="post">
                 <p class="a">published: {{ memories.published_date }}</p>
                 <h1><a href="{% url 'memory_detail' pk=memories.pk %}">{{ memories.title }}</a></h1>  
-                <p class="b">{{ memories.text|truncatechars:200 }}</p>
+                <p class="b"> {% autoescape off %} {{ memories.text|truncatechars:200 }} {% endautoescape %}</p>
             </div>
         </div>
     </div>

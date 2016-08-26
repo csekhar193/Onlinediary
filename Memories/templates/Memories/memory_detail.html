@@ -21,7 +21,9 @@
         {% endif %}
         <h1>{{ memory.title }}</h1>
         <p> written by {{ memory.author }} </p>
-        <p>{{ memory.text|linebreaksbr }}</p>
+        <p>{% autoescape off %}
+        {{ memory.text|linebreaksbr}}               
+        {% endautoescape %}</p>
     </div>
 </div>
 </div>

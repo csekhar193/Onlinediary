@@ -1,4 +1,5 @@
 {% extends 'Memories/base.html' %}
+{% block drafts %} Active {% endblock %}
 
 {% block content %}
 <div class="row">
@@ -6,10 +7,14 @@
 
     {% for memory in memories %}
 	    <div class="well">
-	        <div class="post">
+	       <div class="post">
 	            <p class="a">created: {{ memory.created_date }}</p>
 	            <h1><a href="{% url 'Memories.views.memory_detail' pk=memory.pk %}">{{ memory.title }}</a></h1>
-	            <p class="b">{{ memory.text|truncatechars:200 }}</p>
+	            <p class="b">{% autoescape off %}
+	            {{ memory.text|truncatechars:200 }}
+	            {% endautoescape %}
+	            </p>
+
 	        </div>
 	    </div>
     {% endfor %}
