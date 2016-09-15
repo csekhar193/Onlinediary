@@ -24,6 +24,18 @@
         <p>{% autoescape off %}
         {{ memory.text|linebreaksbr}}               
         {% endautoescape %}</p>
+
+        {% if memory.published_date %}
+            {% if memory.public %}
+                <div>
+                    <a class="btn btn-default btn-xs" href="{% url 'private' pk=memory.pk %}"><span class="private">Private</span></a>
+                </div>
+            {% else %}
+                <div>
+                    <a class="btn btn-default btn-xs" href="{% url 'public' pk=memory.pk %}"><span class="public">Public</span></a>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 </div>

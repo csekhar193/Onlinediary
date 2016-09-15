@@ -1,0 +1,21 @@
+{% extends 'Memories/base.html' %}
+{% block content %}
+ 
+   
+{% for memory in memories %}
+<div class="row">
+    <div class="col-xs-12 col-md-9">
+        <div class="well">  
+            <div class="post">
+                <p class="a">published: {{ memory.published_date }}</p>
+                <h1><a href="{% url 'publicview' memory.pk %}">{{ memory.title }}</a></h1>  
+                <p class="b"> {% autoescape off %} {{ memory.text|truncatechars:200 }} {% endautoescape %}</p>
+            </div>
+            <a href="{% url 'publicview' pk=memory.pk %}">Comments: {{ memory.comments.count }}</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+       
+
+{% endblock %}

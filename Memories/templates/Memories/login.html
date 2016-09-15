@@ -9,7 +9,7 @@
 		<h3>Login with Your username and password</h3>
 	</div>
 	<div class="body">
-		<form action = "/accounts/auth/" method = "post">{% csrf_token %}
+		<form action = "{% url 'auth_view' %}" method = "post">{% csrf_token %}
 			<div class="form-group">
 				<input class="form-control" type = "text", name = "username" , placeholder="Username" , id = "username">
 			</div>
@@ -22,7 +22,7 @@
 		</form>
 	</div>
 	<div class="footer">
-		Don't have an account? <a href="/accounts/register/">Click here</a> to register.
+		Don't have an account? <a href="{% url 'register_user' %}">Click here</a> to register.
 	</div>
 	</div>
 

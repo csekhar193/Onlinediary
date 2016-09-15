@@ -1,0 +1,30 @@
+{% extends 'Memories/base.html' %}
+
+{% block content %}
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="jumbotron">
+    <div class="post"> 
+        <p id="right">published: {{ memory.published_date }}</p>
+        <h1>{{ memory.title }}</h1>
+        <p> written by {{ memory.author }} </p>
+        <p>{% autoescape off %}
+        {{ memory.text|linebreaksbr}}               
+        {% endautoescape %}</p>
+    </div>
+    <div>
+        <a class="btn btn-default" href="{% url 'add_comment_to_memory' pk=memory.pk %}">Add comment</a>
+    </div>
+    {% for comment in memory.comments.all %}
+        <div class="comment">
+            <div class="date">{{ comment.created_date }}</div>
+            <strong>{{ comment.author }}</strong>
+            <p>{% autoescape off %}{{ comment.text|linebreaks }}{% endautoescape %}</p>
+        </div>
+    {% empty %}
+        <p>No comments here yet :(</p>
+    {% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}

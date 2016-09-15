@@ -1,0 +1,47 @@
+{% extends 'Memories/base.html' %}ss
+{% block content %}
+<div class="row">
+<div class="col-xs-6 col-md-3">
+	<div class="thumbnail text-center">
+		<img src="{{user.profile.photo.url}}" class=image-responsive>
+		<div class="caption">
+			<h3>{{ user.get_full_name}}</h3>
+		</div>
+	</div>
+</div>
+<div class=" col-xs-12 col-md-9">
+	<ul class="nav nav-tabs">
+		<li role="presentation" class="active"><a href="{% url 'profile' %}">Profile</a></li>
+		<li role="presentation"><a href="publicpost">Public Posts</a></li>
+	</ul>
+	<div class="panel panel-default">
+			<div class="panel-body">
+				<div>
+					<p class='profile'>Bio:   {{user.profile.bio}}</p>
+				</div>
+				<hr size="30">
+				<div>
+					<p class="profile">Date of Birth: {{user.profile.birth_date}}</p>
+				</div>
+				<hr size="30">
+				<div>
+					<p class="profile">Email: {{user.email}}</p>
+				</div>
+				<hr size="30">
+				<div>
+					<p class="profile">Phone : {{user.profile.phone}}</p>
+				</div>
+				<hr size="30">
+				<div>
+					<p class="profile">City : {{user.profile.city}}</p>
+				</div>
+				<hr size="30">
+				<div>
+					<p class="profile">Country : {{user.profile.country}}</P>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

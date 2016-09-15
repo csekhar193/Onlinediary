@@ -1,12 +1,12 @@
-from django.http import HttpResponseRedirect, HttpResponseForbidden 
+from django.http import HttpResponseForbidden, HttpResponseRedirect 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.core.context_processors import csrf 
 from django.contrib import auth
 from django.contrib.auth.models import User
-from .forms import MyRegistrationForm, MemoryForm
+from .forms import MyRegistrationForm, MemoryForm, CommentForm, UserForm, ProfileForm
 from django.utils import timezone
-from Memories.models import Todays_memory
+from Memories.models import Todays_memory, Profile, Comment
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
@@ -16,7 +16,6 @@ def login(request):
 	return render(request,'Memories/login.html',c)
 	
 def auth_view(request):
-	#if request.method == 'POST':
 	username = request.POST.get('username','')
 	password = request.POST.get('password','')
 	user=auth.authenticate(username = username, password = password)
@@ -53,14 +52,13 @@ def register_success(request):
 @login_required
 def Memories_list(request):
     memories = Todays_memory.objects.filter(published_date__lte=timezone.now(), author=request.user).order_by('-published_date')
-    print request.user
     return render(request, 'Memories/memories_list.html', {'memories': memories})
 
 def memory_detail(request, pk):
     memory = get_object_or_404(Todays_memory, pk=pk)
     return render(request, 'Memories/memory_detail.html', {'memory': memory})
 
-@login_required
+
 def new_memory(request):
     if request.method == "POST":
         form = MemoryForm(request.POST)
@@ -113,6 +111,78 @@ def memory_remove(request, pk):
     memory = get_object_or_404(Todays_memory, pk=pk)
     memory.delete()
     return redirect('Memories.views.Memories_list')
+
+def public(request, pk):
+    memory = get_object_or_404(Todays_memory, pk=pk)
+    memory.public=True
+    memory.save()
+    return render(request, 'Memories/memory_detail.html', {'memory': memory})
+
+def private(request, pk):
+    memory = get_object_or_404(Todays_memory, pk=pk)
+    memory.public=False
+    memory.save()
+    return render(request, 'Memories/memory_detail.html', {'memory': memory})
+
+def public_list(request, username):
+    user=User.objects.get(username=username)
+    memories = Todays_memory.objects.filter(published_date__lte=timezone.now(), author=user.id, public=True).order_by('-published_date')
+    return render(request, 'Memories/public.html', {'memories': memories})
+
+def public_detail_view(request,pk):
+    memory = get_object_or_404(Todays_memory, pk=pk)
+    return render(request, 'Memories/publicview.html', {'memory': memory})
+
+def add_comment_to_memory(request,pk):
+    memory = get_object_or_404(Todays_memory, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.memory = memory
+            comment.todays_memory = memory
+            comment.save()
+            return redirect('publicview', pk=memory.pk)
+    else:
+        form = CommentForm()
+        return render(request, 'Memories/comment.html', {'form': form})
+
+def profile(request):
+    return render(request,'Memories/profile.html',{})
+
+def profile_update(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'Memories/profileupdate.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+def profiles(request):
+    if request.method == 'GET':
+        user1=request.GET.get('q', None)
+        user=User.objects.get(username=user1)
+        return render(request,'Memories/profiles.html',{'user': user})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

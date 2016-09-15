@@ -24,6 +24,13 @@ h1, h2, h3, h4 {
 .save {
     float: right;
 }
+.update{
+    padding-left: 25px;
+}
+
+.comment {
+    margin: 20px 0px 20px 20px;
+}
 
 .post-form textarea, .post-form input {
     width: 100%;
@@ -45,7 +52,7 @@ h1, h2, h3, h4 {
 .post h1 a, .post h1 a:visited {
     color: #000000;
     padding:0px 0px 0px 0px;
-    font-size: 25px
+    font-size: 23px
 
 }
 .a{
