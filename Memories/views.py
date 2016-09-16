@@ -8,6 +8,7 @@ from .forms import MyRegistrationForm, MemoryForm, CommentForm, UserForm, Profil
 from django.utils import timezone
 from Memories.models import Todays_memory, Profile, Comment
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def login(request):
@@ -51,8 +52,20 @@ def register_success(request):
 
 @login_required
 def Memories_list(request):
-    memories = Todays_memory.objects.filter(published_date__lte=timezone.now(), author=request.user).order_by('-published_date')
+    memories_list = Todays_memory.objects.filter(published_date__lte=timezone.now(), author=request.user).order_by('-published_date')
+    paginator = Paginator(memories_list, 10) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        memories = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        memories = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        memories = paginator.page(paginator.num_pages)
     return render(request, 'Memories/memories_list.html', {'memories': memories})
+
 
 def memory_detail(request, pk):
     memory = get_object_or_404(Todays_memory, pk=pk)
@@ -99,7 +112,18 @@ def edit_memory(request, pk):
     
 @login_required
 def memories_draft_list(request):
-    memories = Todays_memory.objects.filter(published_date__isnull=True,author=request.user).order_by('created_date')
+    memories_list = Todays_memory.objects.filter(published_date__isnull=True,author=request.user).order_by('-created_date')
+    paginator = Paginator(memories_list, 10) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        memories = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        memories = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        memories = paginator.page(paginator.num_pages)
     return render(request, 'Memories/memories_draft_list.html', {'memories': memories})
 
 def memory_publish(request, pk):
@@ -126,7 +150,18 @@ def private(request, pk):
 
 def public_list(request, username):
     user=User.objects.get(username=username)
-    memories = Todays_memory.objects.filter(published_date__lte=timezone.now(), author=user.id, public=True).order_by('-published_date')
+    memories_list = Todays_memory.objects.filter(published_date__lte=timezone.now(), author=user.id, public=True).order_by('-published_date')
+    paginator = Paginator(memories_list, 10) # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        memories = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        memories = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        memories = paginator.page(paginator.num_pages)
     return render(request, 'Memories/public.html', {'memories': memories})
 
 def public_detail_view(request,pk):

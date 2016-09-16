@@ -2,9 +2,10 @@
 {% block content %}
  
    
-{% for memory in memories %}
+
 <div class="row">
-    <div class="col-xs-12 col-md-9">
+    <div class="col-xs-12 col-md-12">
+    {% for memory in memories %}
         <div class="well">  
             <div class="post">
                 <p class="a">published: {{ memory.published_date }}</p>
@@ -13,9 +14,29 @@
             </div>
             <a href="{% url 'publicview' pk=memory.pk %}">Comments: {{ memory.comments.count }}</a>
         </div>
+    {% endfor %}
+    {% if memories %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if memories.has_previous %}
+                <a href="?page={{ memories.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ memories.number }} of {{ memories.paginator.num_pages }}.
+            </span>
+
+            {% if memories.has_next %}
+                <a href="?page={{ memories.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+    {% else %}
+        <h3> No Public Memories </h3>
+    {% endif %}
     </div>
 </div>
-{% endfor %}
+
        
 
 {% endblock %}

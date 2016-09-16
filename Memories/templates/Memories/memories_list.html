@@ -3,19 +3,40 @@
 {% block content %}
  
    
-{% for memories in memories %}
+ 
 <div class="row">
     <div class="col-xs-12 col-md-12">
-        <div class="well">  
+    {% for memories in memories %}
+        <div class="well">         
             <div class="post">
                 <p class="a">published: {{ memories.published_date }}</p>
                 <h1><a href="{% url 'memory_detail' pk=memories.pk %}">{{ memories.title }}</a></h1>  
                 <p class="b"> {% autoescape off %} {{ memories.text|truncatechars:200 }} {% endautoescape %}</p>
             </div>
         </div>
+    {% endfor %}
+    {% if memories %}
+	<div class="pagination">
+	   	<span class="step-links">
+	        {% if memories.has_previous %}
+	            <a href="?page={{ memories.previous_page_number }}">previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ memories.number }} of {{ memories.paginator.num_pages }}.
+	        </span>
+
+	        {% if memories.has_next %}
+	            <a href="?page={{ memories.next_page_number }}">next</a>
+	        {% endif %}
+	    </span>
+	</div>  
+	{% else %}
+        <h3> No Memories </h3>
+    {% endif %}
     </div>
 </div>
-{% endfor %}
-       
+
+
 
 {% endblock %}
